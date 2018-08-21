@@ -1,0 +1,32 @@
+{
+  "name": "phaser3-typescript-webpack",
+  "version": "1.0.0",
+  "description": "",
+  "author": "troyedwardsjr",
+  "main": "index.js",
+  "scripts": {
+    "start": "webpack",
+    "dev": "webpack",
+    "deploy": "webpack --config webpack.production.config.js",
+    "test": "eslint ./src/**/**.js"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.0.0-beta.42",
+    "@babel/polyfill": "^7.0.0-beta.42",
+    "@babel/preset-env": "^7.0.0-beta.42",
+    "@babel/preset-typescript": "^7.0.0-beta.42",
+    "awesome-typescript-loader": "^3.4.1",
+    "babel-loader": "8.0.0-beta.2",
+    "browser-sync": "^2.18.13",
+    "browser-sync-webpack-plugin": "^1.2.0",
+    "html-webpack-plugin": "^2.30.1",
+    "raw-loader": "^0.5.1",
+    "tslint-config-prettier": "^1.15.0",
+    "typescript": "^2.7.2",
+    "webpack": "3.11.0"
+  },
+  "dependencies": {
+    "phaser": "3.3.0"
+  }
+}
