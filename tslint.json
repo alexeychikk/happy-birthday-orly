@@ -1,6 +1,9 @@
 {
-    "extends": [
-      "tslint:latest",
-      "tslint-config-prettier"
-    ]
-  }
+	"extends": ["tslint:latest", "tslint-config-prettier"],
+	"rules": {
+		"quotemark": [true, "single"],
+		"semicolon": true,
+		"indent": [true, "tabs", 2],
+		"max-line-length": [true, 80]
+	}
+}

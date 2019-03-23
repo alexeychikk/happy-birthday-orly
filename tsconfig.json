@@ -1,12 +1,14 @@
 {
 	"compilerOptions": {
-			"target": "es5",
-			"module": "commonjs",
-			"sourceMap": true
-	},
-	
-	"files": [
-		"src/phaser.d.ts",
-		"src/main.ts"
-	]
+		"target": "es5",
+		"module": "esnext",
+		"strict": true,
+		"noImplicitAny": true,
+		"esModuleInterop": true,
+		"allowUnreachableCode": false,
+		"sourceMap": true,
+		"strictPropertyInitialization": false,
+		"typeRoots": ["node_modules/@types", "src/typings"],
+		"lib": ["dom", "es5", "esnext", "scripthost"]
+	}
 }
