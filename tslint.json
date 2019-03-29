@@ -4,6 +4,8 @@
 		"quotemark": [true, "single"],
 		"semicolon": true,
 		"indent": [true, "tabs", 2],
-		"max-line-length": [true, 80]
+		"max-line-length": [true, 80],
+		"object-literal-sort-keys": false,
+		"curly": [true, "ignore-same-line"]
 	}
 }

@@ -1,31 +1,25 @@
-const KeyCodes = Phaser.Input.Keyboard.KeyCodes;
+import { Player } from '../entities/Player';
 
 export class MainScene extends Phaser.Scene {
+	private player: Player;
+
 	constructor() {
 		super({
 			key: 'MainScene'
 		});
+
+		this.player = new Player({ scene: this });
 	}
 
 	public preload() {
-		this.load.spritesheet('orly', 'assets/sprites/orly.png', {
-			frameHeight: 102,
-			frameWidth: 77
-		});
+		this.player.preload();
 	}
 
 	public create() {
-		const walkAnimation = this.anims.create({
-			frameRate: 9,
-			frames: this.anims.generateFrameNumbers('orly', { start: 1, end: 8 }),
-			key: 'walk',
-			repeat: -1
-		});
-
-		const sprite = this.add.sprite(400, 300, 'orly');
-		sprite.anims.load('walk');
-		sprite.anims.play('walk');
+		this.player.create();
 	}
 
-	public update(time: number, delta: number) {}
+	public update(time: number, delta: number) {
+		this.player.update();
+	}
 }
