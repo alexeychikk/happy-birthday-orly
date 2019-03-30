@@ -1,7 +1,7 @@
 {
 	"compilerOptions": {
 		"target": "es5",
-		"module": "esnext",
+		"module": "commonjs",
 		"strict": true,
 		"noImplicitAny": true,
 		"esModuleInterop": true,
@@ -9,7 +9,11 @@
 		"sourceMap": true,
 		"strictPropertyInitialization": false,
 		"typeRoots": ["node_modules/@types", "src/typings"],
-		"lib": ["dom", "es5", "esnext", "scripthost"]
+		"lib": ["dom", "es5", "esnext", "scripthost"],
+		"baseUrl": "./",
+		"paths": {
+			"@src/*": ["src/*"]
+		}
 	},
 	"include": ["src/**/*"]
 }

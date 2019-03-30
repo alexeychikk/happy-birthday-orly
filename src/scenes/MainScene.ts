@@ -1,4 +1,4 @@
-import { Player } from '../entities/Player';
+import { Player } from '../entities';
 
 export class MainScene extends Phaser.Scene {
 	private player: Player;

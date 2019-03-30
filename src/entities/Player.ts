@@ -1,8 +1,9 @@
+import { getCursorPressDuration, PhCursorKeys } from '../utils';
+
 type PhAnimation = Phaser.Animations.Animation;
 type PhSprite = Phaser.Physics.Arcade.Sprite & {
 	body: Phaser.Physics.Arcade.Body;
 };
-type PhCursorKeys = Required<Phaser.Input.Keyboard.CursorKeys>;
 
 enum PlayerState {
 	standing,
@@ -25,6 +26,7 @@ export class Player {
 	private movementSpeed: number = 250;
 	private jumpPower: number = 550;
 	private jumpVelocityX: number = 1;
+	private jumpPressDuration: number = 300;
 
 	constructor({ scene }: { scene: Phaser.Scene }) {
 		this.scene = scene;
@@ -47,6 +49,8 @@ export class Player {
 		this.fall();
 		if (this.cursors.up.isDown && this.cursors.down.isUp) {
 			this.jump();
+		} else {
+			this.endJump();
 		}
 
 		if (this.cursors.left.isDown || this.cursors.right.isDown) {
@@ -58,9 +62,9 @@ export class Player {
 
 	private walk(): void {
 		const onFloor = this.sprite.body.onFloor();
-		const turningLeft = this.cursors.left.isDown;
-		this.sprite.setVelocityX(this.getVelocity(turningLeft));
-		this.sprite.setFlipX(turningLeft);
+		const walkingLeft = this.cursors.left.isDown;
+		this.sprite.setVelocityX(this.getVelocity(walkingLeft));
+		this.sprite.setFlipX(walkingLeft);
 
 		if (
 			this.sprite.state !== PlayerState.walking &&
@@ -72,28 +76,54 @@ export class Player {
 		}
 	}
 
-	private getVelocity(turningLeft: boolean): number {
+	private getVelocity(walkingLeft: boolean): number {
 		const onFloor = this.sprite.body.onFloor();
-		const turnFactor = turningLeft ? -1 : 1;
-		if (onFloor) return this.movementSpeed * turnFactor;
+		const turnFactor = walkingLeft ? -1 : 1;
 
-		if (this.jumpVelocityX === 0) return this.movementSpeed * turnFactor * 0.4;
+		if (onFloor) {
+			return this.movementSpeed * turnFactor;
+		}
+		if (this.jumpVelocityX === 0) {
+			return this.movementSpeed * turnFactor * this.getWalkFactor(walkingLeft);
+		}
 
 		const jumpingRight = this.jumpVelocityX > 0;
 		const jumpFactor =
-			(jumpingRight && !turningLeft) || (!jumpingRight && turningLeft)
+			(jumpingRight && !walkingLeft) || (!jumpingRight && walkingLeft)
 				? 1
 				: 0.4;
-		return this.jumpVelocityX * jumpFactor;
+		return this.jumpVelocityX * jumpFactor * this.getWalkFactor(walkingLeft);
+	}
+
+	private getPressDuration(direction: keyof PhCursorKeys): number {
+		return getCursorPressDuration(this.scene, this.cursors, direction);
+	}
+
+	private getWalkDuration(walkingLeft: boolean): number {
+		return Math.min(
+			this.jumpPressDuration,
+			this.getPressDuration(walkingLeft ? 'left' : 'right')
+		);
+	}
+
+	private getWalkFactor(walkingLeft: boolean): number {
+		return this.getWalkDuration(walkingLeft) / this.jumpPressDuration;
 	}
 
 	private jump(): void {
 		if (!this.sprite.body.onFloor()) return;
 
 		this.jumpVelocityX = this.sprite.body.velocity.x;
-		this.sprite.setState(PlayerState.jumping);
 		this.sprite.setVelocityY(-this.jumpPower);
+		this.sprite.setState(PlayerState.jumping);
 		this.sprite.anims.play(this.animations.jump.key);
+	}
+
+	private endJump(): void {
+		const deltaY = this.sprite.body.deltaY();
+		if (deltaY < 0 && this.sprite.body.velocity.y > -this.jumpPower / 1.5) {
+			this.sprite.setVelocityY(0);
+		}
 	}
 
 	private fall(): void {
