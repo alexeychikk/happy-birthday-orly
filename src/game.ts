@@ -4,14 +4,14 @@ import { MainScene } from './scenes/MainScene';
 
 const config: GameConfig = {
 	type: Phaser.AUTO,
-	width: 1200,
+	width: window.innerWidth,
 	height: 400,
 	input: { keyboard: true },
 	parent: 'game',
 	physics: {
 		arcade: {
 			debug: false,
-			gravity: { y: 900 }
+			gravity: { y: 1200 }
 		},
 		default: 'arcade'
 	},
