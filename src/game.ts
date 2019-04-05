@@ -5,7 +5,7 @@ import { MainScene } from './scenes/MainScene';
 const config: GameConfig = {
 	type: Phaser.AUTO,
 	width: window.innerWidth,
-	height: 400,
+	height: window.innerHeight,
 	input: { keyboard: true },
 	parent: 'game',
 	physics: {

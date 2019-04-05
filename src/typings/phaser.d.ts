@@ -72523,7 +72523,7 @@ declare namespace Phaser {
              * @param x The x position to place the layer in the world. If not specified, it will default to the layer offset from Tiled or 0.
              * @param y The y position to place the layer in the world. If not specified, it will default to the layer offset from Tiled or 0.
              */
-            createDynamicLayer(layerID: integer | string, tileset: string | string[] | Phaser.Tilemaps.Tileset | Phaser.Tilemaps.Tileset[], x: number, y: number): Phaser.Tilemaps.DynamicTilemapLayer;
+            createDynamicLayer(layerID: integer | string, tileset: string | string[] | Phaser.Tilemaps.Tileset | Phaser.Tilemaps.Tileset[], x?: number, y?: number): Phaser.Tilemaps.DynamicTilemapLayer;
 
             /**
              * Creates a Sprite for every object matching the given gid in the map data. All properties from

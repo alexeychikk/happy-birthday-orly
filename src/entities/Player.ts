@@ -1,4 +1,4 @@
-import { getCursorPressDuration, PhCursorKeys } from '../utils';
+import { getCursorPressDuration, PhCursorKeys } from '@src/utils';
 
 type PhAnimation = Phaser.Animations.Animation;
 type PhSprite = Phaser.Physics.Arcade.Sprite & {
@@ -14,7 +14,6 @@ enum PlayerState {
 }
 
 export class Player {
-	private static readonly SPRITE = 'orly';
 	private readonly scene: Phaser.Scene;
 	private animations: {
 		walk: PhAnimation;
@@ -22,6 +21,7 @@ export class Player {
 		fall: PhAnimation;
 	};
 	private sprite: PhSprite;
+	private spriteKey: string = 'orly';
 	private cursors: PhCursorKeys;
 	private movementSpeed: number = 250;
 	private jumpPower: number = 550;
@@ -33,15 +33,19 @@ export class Player {
 	}
 
 	public preload(): void {
-		this.scene.load.spritesheet(Player.SPRITE, 'assets/sprites/orly.png', {
-			frameHeight: 102,
-			frameWidth: 77
-		});
+		this.scene.load.spritesheet(
+			this.spriteKey,
+			`assets/sprites/${this.spriteKey}.png`,
+			{
+				frameHeight: 102,
+				frameWidth: 77
+			}
+		);
 	}
 
-	public create(): void {
+	public create({ position }: { position: Vector2Like }): void {
 		this.createAnimations();
-		this.createSprite();
+		this.createSprite(position);
 		this.cursors = this.scene.input.keyboard.createCursorKeys() as PhCursorKeys;
 	}
 
@@ -154,7 +158,7 @@ export class Player {
 		const walk = this.scene.anims.create({
 			key: 'walk',
 			frameRate: 13,
-			frames: this.scene.anims.generateFrameNumbers(Player.SPRITE, {
+			frames: this.scene.anims.generateFrameNumbers(this.spriteKey, {
 				start: 1,
 				end: 8
 			}),
@@ -164,7 +168,7 @@ export class Player {
 		const jump = this.scene.anims.create({
 			key: 'jump',
 			frameRate: 10,
-			frames: this.scene.anims.generateFrameNumbers(Player.SPRITE, {
+			frames: this.scene.anims.generateFrameNumbers(this.spriteKey, {
 				start: 9,
 				end: 12
 			}),
@@ -174,7 +178,7 @@ export class Player {
 		const fall = this.scene.anims.create({
 			key: 'fall',
 			frameRate: 10,
-			frames: this.scene.anims.generateFrameNumbers(Player.SPRITE, {
+			frames: this.scene.anims.generateFrameNumbers(this.spriteKey, {
 				start: 13,
 				end: 16
 			}),
@@ -188,11 +192,11 @@ export class Player {
 		};
 	}
 
-	private createSprite(): void {
+	private createSprite({ x, y }: Vector2Like): void {
 		this.sprite = this.scene.physics.add.sprite(
-			400,
-			300,
-			Player.SPRITE
+			x,
+			y,
+			this.spriteKey
 		) as PhSprite;
 		this.sprite.anims.load(this.animations.walk.key);
 		this.sprite.anims.load(this.animations.jump.key);
