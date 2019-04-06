@@ -40,6 +40,17 @@
                  "width":32,
                  "x":64,
                  "y":400
+                }, 
+                {
+                 "height":80,
+                 "id":2,
+                 "name":"door",
+                 "rotation":0,
+                 "type":"question",
+                 "visible":true,
+                 "width":32,
+                 "x":784,
+                 "y":336
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -48,7 +59,7 @@
          "y":0
         }],
  "nextlayerid":11,
- "nextobjectid":2,
+ "nextobjectid":3,
  "orientation":"orthogonal",
  "renderorder":"left-up",
  "tiledversion":"1.2.3",

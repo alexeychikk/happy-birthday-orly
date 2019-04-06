@@ -25,7 +25,7 @@ export class Player {
 	private spriteKey: string = 'orly';
 	private cursors: PhCursorKeys;
 	private movementSpeed: number = 300;
-	private jumpPower: number = 550;
+	private jumpPower: number = 670;
 	private jumpVelocityX: number = 1;
 	private jumpPressDuration: number = 300;
 
@@ -173,7 +173,7 @@ export class Player {
 	private createAnimations(): void {
 		const walk = this.scene.anims.create({
 			key: 'walk',
-			frameRate: 13,
+			frameRate: 14,
 			frames: this.scene.anims.generateFrameNumbers(this.spriteKey, {
 				start: 1,
 				end: 8
@@ -183,7 +183,7 @@ export class Player {
 
 		const jump = this.scene.anims.create({
 			key: 'jump',
-			frameRate: 10,
+			frameRate: 14,
 			frames: this.scene.anims.generateFrameNumbers(this.spriteKey, {
 				start: 9,
 				end: 12
@@ -193,7 +193,7 @@ export class Player {
 
 		const fall = this.scene.anims.create({
 			key: 'fall',
-			frameRate: 10,
+			frameRate: 14,
 			frames: this.scene.anims.generateFrameNumbers(this.spriteKey, {
 				start: 13,
 				end: 16

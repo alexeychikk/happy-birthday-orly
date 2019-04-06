@@ -1,4 +1,5 @@
 import { LevelScene } from '@src/scenes';
+import { Doors } from './Doors';
 import { LevelBackground } from './LevelBackground';
 
 export class LevelMap {
@@ -11,16 +12,19 @@ export class LevelMap {
 	private tiles: Phaser.Tilemaps.Tileset;
 	private background: LevelBackground;
 	private scaling: number = 3;
+	private doors: Doors;
 
 	constructor({ scene }: { scene: LevelScene }) {
 		this.scene = scene;
 		this.background = new LevelBackground({ scene });
+		this.doors = new Doors({ scene });
 	}
 
 	public preload() {
 		this.scene.load.image('tiles', 'assets/tilemaps/extruded.png');
 		this.scene.load.tilemapTiledJSON('map', 'assets/tilemaps/base.json');
 		this.background.preload();
+		this.doors.preload();
 	}
 
 	public create() {
@@ -37,6 +41,8 @@ export class LevelMap {
 		});
 		this.objectsLayer = this.map.getObjectLayer('objects');
 		this.startPosition = this.getObject('startPosition');
+		this.doors.create({ map: this.map });
+
 		this.scene.physics.world.setBounds(
 			0,
 			0,
@@ -53,6 +59,7 @@ export class LevelMap {
 
 	public update() {
 		this.background.update();
+		this.doors.update();
 	}
 
 	public getStartPosition(): Vector2Like {
