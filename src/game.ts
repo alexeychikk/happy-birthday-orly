@@ -15,7 +15,11 @@ const config: GameConfig = {
 		},
 		default: 'arcade'
 	},
-	scene: [MainScene]
+	scene: [MainScene],
+	render: {
+		pixelArt: true,
+		roundPixels: true
+	}
 };
 
 const game = new Phaser.Game(config);

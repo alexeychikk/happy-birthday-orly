@@ -1,3 +1,4 @@
+import { LevelScene } from '@src/scenes';
 import { getCursorPressDuration, PhCursorKeys } from '@src/utils';
 
 type PhAnimation = Phaser.Animations.Animation;
@@ -14,13 +15,13 @@ enum PlayerState {
 }
 
 export class Player {
-	private readonly scene: Phaser.Scene;
+	public sprite: PhSprite;
+	private readonly scene: LevelScene;
 	private animations: {
 		walk: PhAnimation;
 		jump: PhAnimation;
 		fall: PhAnimation;
 	};
-	private sprite: PhSprite;
 	private spriteKey: string = 'orly';
 	private cursors: PhCursorKeys;
 	private movementSpeed: number = 250;
@@ -28,7 +29,7 @@ export class Player {
 	private jumpVelocityX: number = 1;
 	private jumpPressDuration: number = 300;
 
-	constructor({ scene }: { scene: Phaser.Scene }) {
+	constructor({ scene }: { scene: LevelScene }) {
 		this.scene = scene;
 	}
 
@@ -50,6 +51,11 @@ export class Player {
 	}
 
 	public update(): void {
+		this.applyControls();
+		this.checkDeath();
+	}
+
+	private applyControls() {
 		this.fall();
 		if (this.cursors.up.isDown && this.cursors.down.isUp) {
 			this.jump();
@@ -61,6 +67,12 @@ export class Player {
 			this.walk();
 		} else {
 			this.stop();
+		}
+	}
+
+	private checkDeath() {
+		if (this.sprite.y > this.scene.height + 100) {
+			this.scene.scene.restart();
 		}
 	}
 
@@ -124,8 +136,10 @@ export class Player {
 	}
 
 	private endJump(): void {
-		const deltaY = this.sprite.body.deltaY();
-		if (deltaY < 0 && this.sprite.body.velocity.y > -this.jumpPower / 1.5) {
+		if (
+			this.sprite.body.deltaY() < 0 &&
+			this.sprite.body.velocity.y > -this.jumpPower / 1.5
+		) {
 			this.sprite.setVelocityY(0);
 		}
 	}
@@ -200,6 +214,8 @@ export class Player {
 		) as PhSprite;
 		this.sprite.anims.load(this.animations.walk.key);
 		this.sprite.anims.load(this.animations.jump.key);
-		this.sprite.setCollideWorldBounds(true);
+		this.sprite.body.width = 36;
+		this.sprite.body.offset.x = 20;
+		this.scene.cameras.main.startFollow(this.sprite);
 	}
 }

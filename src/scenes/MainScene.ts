@@ -1,8 +1,9 @@
 import { LevelMap } from '@src/components';
 import { Player } from '@src/entities';
+import { LevelScene } from './LevelScene';
 
-export class MainScene extends Phaser.Scene {
-	private player: Player;
+export class MainScene extends LevelScene {
+	public player: Player;
 	private map: LevelMap;
 
 	constructor() {
@@ -21,8 +22,8 @@ export class MainScene extends Phaser.Scene {
 
 	public create() {
 		this.cameras.main.setBackgroundColor('#1e88e5');
-		this.map.create();
-		this.player.create({ position: { x: 300, y: 400 } });
+		this.player.create({ position: { x: 300, y: 520 } });
+		this.map.create({ player: this.player });
 	}
 
 	public update(time: number, delta: number) {

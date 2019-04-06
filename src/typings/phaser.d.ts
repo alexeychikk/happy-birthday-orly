@@ -61811,7 +61811,7 @@ declare namespace Phaser {
                 /**
                  * The local configuration settings of the CanvasRenderer.
                  */
-                config: object;
+                config: RenderConfig;
 
                 /**
                  * The scale mode which should be used by the CanvasRenderer.
@@ -62903,7 +62903,7 @@ declare namespace Phaser {
                 /**
                  * The local configuration settings of this WebGL Renderer.
                  */
-                config: object;
+                config: RenderConfig;
 
                 /**
                  * The Game instance which owns this WebGL Renderer.
