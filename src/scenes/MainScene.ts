@@ -21,13 +21,18 @@ export class MainScene extends LevelScene {
 	}
 
 	public create() {
-		this.cameras.main.setBackgroundColor('#1e88e5');
+		this.map.create();
 		this.player.create({ position: { x: 300, y: 520 } });
-		this.map.create({ player: this.player });
+		this.addColliders();
 	}
 
 	public update(time: number, delta: number) {
 		this.map.update();
 		this.player.update();
+	}
+
+	private addColliders() {
+		this.physics.add.collider(this.map.platforms, this.player.sprite);
+		this.physics.add.collider(this.map.objects, this.player.sprite);
 	}
 }
