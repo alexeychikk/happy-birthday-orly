@@ -24,7 +24,7 @@ export class Player {
 	};
 	private spriteKey: string = 'orly';
 	private cursors: PhCursorKeys;
-	private movementSpeed: number = 250;
+	private movementSpeed: number = 300;
 	private jumpPower: number = 550;
 	private jumpVelocityX: number = 1;
 	private jumpPressDuration: number = 300;
@@ -39,7 +39,9 @@ export class Player {
 			`assets/sprites/${this.spriteKey}.png`,
 			{
 				frameHeight: 102,
-				frameWidth: 77
+				frameWidth: 77,
+				margin: 1,
+				spacing: 2
 			}
 		);
 	}
@@ -216,6 +218,7 @@ export class Player {
 		this.sprite.anims.load(this.animations.jump.key);
 		this.sprite.body.width = 36;
 		this.sprite.body.offset.x = 20;
+		this.sprite.setDepth(49);
 		this.scene.cameras.main.startFollow(this.sprite);
 	}
 }

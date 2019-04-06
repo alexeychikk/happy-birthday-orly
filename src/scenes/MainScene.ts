@@ -22,7 +22,7 @@ export class MainScene extends LevelScene {
 
 	public create() {
 		this.map.create();
-		this.player.create({ position: { x: 300, y: 520 } });
+		this.player.create({ position: this.map.getStartPosition() });
 		this.addColliders();
 	}
 
@@ -33,6 +33,6 @@ export class MainScene extends LevelScene {
 
 	private addColliders() {
 		this.physics.add.collider(this.map.platforms, this.player.sprite);
-		this.physics.add.collider(this.map.objects, this.player.sprite);
+		this.physics.add.collider(this.map.platformObjects, this.player.sprite);
 	}
 }
