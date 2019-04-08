@@ -50,6 +50,53 @@
 	</head>
 	<body>
 		<style>
+			@font-face {
+				font-family: 'Arcade';
+				src: url('assets/fonts/arcade.ttf');
+			}
+
+			@keyframes shake {
+				0% {
+					transform: translate(2px, 1px) rotate(0deg);
+				}
+				10% {
+					transform: translate(-1px, -2px) rotate(-1deg);
+				}
+				20% {
+					transform: translate(-3px, 0px) rotate(1deg);
+				}
+				30% {
+					transform: translate(0px, 2px) rotate(0deg);
+				}
+				40% {
+					transform: translate(1px, -1px) rotate(1deg);
+				}
+				50% {
+					transform: translate(-1px, 2px) rotate(-1deg);
+				}
+				60% {
+					transform: translate(-3px, 1px) rotate(0deg);
+				}
+				70% {
+					transform: translate(2px, 1px) rotate(-1deg);
+				}
+				80% {
+					transform: translate(-1px, -1px) rotate(1deg);
+				}
+				90% {
+					transform: translate(2px, 2px) rotate(0deg);
+				}
+				100% {
+					transform: translate(1px, -2px) rotate(-1deg);
+				}
+			}
+			.shake {
+				animation-name: shake;
+				animation-duration: 0.5s;
+				transform-origin: 50% 50%;
+				animation-timing-function: linear;
+			}
+
 			html,
 			body {
 				width: 100%;
@@ -83,6 +130,86 @@
 				font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
 				color: #ffffff;
 			}
+			.arcade-text {
+				font-family: 'Arcade';
+				color: #463818;
+				font-size: 13px;
+				letter-spacing: 2px;
+			}
+			.dialog-hint {
+				font-size: 10px;
+			}
+			#dialog {
+				width: 400px;
+				height: 300px;
+				background: url('assets/images/dialog.png');
+				position: fixed;
+				right: 10%;
+				top: 10%;
+				transition: all 0.4s ease-in-out;
+			}
+			.dialog-content {
+				position: relative;
+				width: 100%;
+				height: 100%;
+			}
+			#dialog-text {
+				position: absolute;
+				left: 46px;
+				width: 308px;
+				top: 43px;
+				font-size: 15px;
+			}
+			#dialog-input {
+				position: absolute;
+				bottom: 110px;
+				left: 46px;
+				background-color: transparent;
+				border: 2px solid #463818;
+				width: 308px;
+				border-radius: 6px;
+				outline: none;
+				padding: 4px 8px;
+				box-sizing: border-box;
+				font-size: 15px;
+			}
+			#dialog-input:focus {
+				border-color: #6d6330;
+			}
+			#dialog-button {
+				position: absolute;
+				bottom: 46px;
+				right: 48px;
+				width: 110px;
+				height: 40px;
+				background: url('assets/images/button.png');
+				outline: none;
+				border: none;
+				cursor: pointer;
+				transition: all 0.08s ease-in-out;
+			}
+			#dialog-button:hover {
+				transform: scale(1.1);
+			}
+			.visible {
+				visibility: visible;
+				opacity: 1;
+			}
+			.hidden {
+				visibility: hidden;
+				opacity: 0;
+				transform: translateY(20px);
+			}
+			input::-webkit-outer-spin-button,
+			input::-webkit-inner-spin-button {
+				/* display: none; <- Crashes Chrome on hover */
+				-webkit-appearance: none;
+				margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+			}
+
+			input[type='number'] {
+				-moz-appearance: textfield; /* Firefox */
+			}
 		</style>
 
 		<noscript>
@@ -90,6 +217,20 @@
 		</noscript>
 
 		<div id="phaser-game"></div>
+
+		<div id="dialog" class="hidden">
+			<div class="dialog-content">
+				<div id="dialog-text" class="arcade-text"></div>
+				<input
+					id="dialog-input"
+					class="arcade-text"
+					type="text"
+					maxlength="16"
+					spellcheck="false"
+				/>
+				<button id="dialog-button" class="arcade-text">Answer</button>
+			</div>
+		</div>
 
 		<script>
 			// Check that service workers are registered

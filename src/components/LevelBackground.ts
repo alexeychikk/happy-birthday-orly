@@ -14,10 +14,6 @@ export class LevelBackground {
 	}
 
 	public preload() {
-		this.scene.load.image(
-			'sky_cloud_big',
-			'assets/backgrounds/sky_cloud_big.png'
-		);
 		this.scene.load.image('mountains', 'assets/backgrounds/mountains.png');
 		this.scene.load.image('clouds_BG', 'assets/backgrounds/clouds_BG.png');
 		this.scene.load.image('clouds_MG_1', 'assets/backgrounds/clouds_MG_1.png');

@@ -24,10 +24,11 @@ export class Player {
 	};
 	private spriteKey: string = 'orly';
 	private cursors: PhCursorKeys;
-	private movementSpeed: number = 300;
+	private movementSpeed: number = 1000;
 	private jumpPower: number = 670;
 	private jumpVelocityX: number = 1;
 	private jumpPressDuration: number = 300;
+	private frozen: boolean = false;
 
 	constructor({ scene }: { scene: LevelScene }) {
 		this.scene = scene;
@@ -57,7 +58,13 @@ export class Player {
 		this.checkDeath();
 	}
 
+	public toggleFreeze(frozen: boolean) {
+		this.frozen = frozen;
+		this.stop();
+	}
+
 	private applyControls() {
+		if (this.frozen) return;
 		this.fall();
 		if (this.cursors.up.isDown && this.cursors.down.isUp) {
 			this.jump();
@@ -68,7 +75,7 @@ export class Player {
 		if (this.cursors.left.isDown || this.cursors.right.isDown) {
 			this.walk();
 		} else {
-			this.stop();
+			this.tryStop();
 		}
 	}
 
@@ -158,7 +165,6 @@ export class Player {
 	}
 
 	private stop(): void {
-		if (!this.sprite.body.onFloor() || this.cursors.up.isDown) return;
 		this.sprite.anims.stop();
 		this.sprite.setVelocityX(0);
 		if (this.cursors.down.isDown) {
@@ -170,9 +176,14 @@ export class Player {
 		}
 	}
 
+	private tryStop() {
+		if (!this.sprite.body.onFloor() || this.cursors.up.isDown) return;
+		this.stop();
+	}
+
 	private createAnimations(): void {
 		const walk = this.scene.anims.create({
-			key: 'walk',
+			key: Phaser.Math.RND.uuid(),
 			frameRate: 14,
 			frames: this.scene.anims.generateFrameNumbers(this.spriteKey, {
 				start: 1,
@@ -182,7 +193,7 @@ export class Player {
 		}) as PhAnimation;
 
 		const jump = this.scene.anims.create({
-			key: 'jump',
+			key: Phaser.Math.RND.uuid(),
 			frameRate: 14,
 			frames: this.scene.anims.generateFrameNumbers(this.spriteKey, {
 				start: 9,
@@ -192,7 +203,7 @@ export class Player {
 		}) as PhAnimation;
 
 		const fall = this.scene.anims.create({
-			key: 'fall',
+			key: Phaser.Math.RND.uuid(),
 			frameRate: 14,
 			frames: this.scene.anims.generateFrameNumbers(this.spriteKey, {
 				start: 13,
@@ -210,15 +221,17 @@ export class Player {
 
 	private createSprite({ x, y }: Vector2Like): void {
 		this.sprite = this.scene.physics.add.sprite(
-			x,
-			y,
+			0,
+			0,
 			this.spriteKey
 		) as PhSprite;
+		this.sprite.setOrigin(0, 0);
+		this.sprite.setPosition(x, y - this.sprite.displayHeight);
 		this.sprite.anims.load(this.animations.walk.key);
 		this.sprite.anims.load(this.animations.jump.key);
 		this.sprite.body.width = 36;
 		this.sprite.body.offset.x = 20;
-		this.sprite.setDepth(49);
+		this.sprite.setDepth(48);
 		this.scene.cameras.main.startFollow(this.sprite);
 	}
 }

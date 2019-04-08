@@ -8,6 +8,7 @@
 		"object-literal-sort-keys": false,
 		"curly": [true, "ignore-same-line"],
 		"no-implicit-dependencies": [true, ["@src"]],
-		"no-submodule-imports": [true, "@src"]
+		"no-submodule-imports": [true, "@src"],
+		"prefer-object-spread": false
 	}
 }

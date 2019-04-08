@@ -17,8 +17,10 @@ const config: GameConfig = {
 	},
 	scene: [MainScene],
 	render: {
+		antialias: false,
 		pixelArt: true,
-		roundPixels: true
+		roundPixels: true,
+		powerPreference: 'high-performance'
 	}
 };
 

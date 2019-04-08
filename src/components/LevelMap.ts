@@ -5,14 +5,14 @@ import { LevelBackground } from './LevelBackground';
 export class LevelMap {
 	public platforms: Phaser.Tilemaps.DynamicTilemapLayer;
 	public platformObjects: Phaser.Tilemaps.DynamicTilemapLayer;
+	public map: Phaser.Tilemaps.Tilemap;
+	public doors: Doors;
 	private startPosition: LevelObject;
 	private objectsLayer: Phaser.Tilemaps.ObjectLayer;
 	private scene: LevelScene;
-	private map: Phaser.Tilemaps.Tilemap;
 	private tiles: Phaser.Tilemaps.Tileset;
 	private background: LevelBackground;
 	private scaling: number = 3;
-	private doors: Doors;
 
 	constructor({ scene }: { scene: LevelScene }) {
 		this.scene = scene;
@@ -41,7 +41,7 @@ export class LevelMap {
 		});
 		this.objectsLayer = this.map.getObjectLayer('objects');
 		this.startPosition = this.getObject('startPosition');
-		this.doors.create({ map: this.map });
+		this.doors.create({ level: this });
 
 		this.scene.physics.world.setBounds(
 			0,
@@ -67,15 +67,27 @@ export class LevelMap {
 		return { x: displayX, y: displayY };
 	}
 
-	private getObject(name: string): LevelObject {
-		const obj = this.objectsLayer.objects.find(
-			o => o.name === name
-		) as LevelObject;
+	public getObject(name: string): LevelObject {
+		return this.getObjects(name)[0];
+	}
 
-		obj.displayX = obj.x * this.scaling;
-		obj.displayY =
-			this.scene.height - this.platforms.displayHeight + obj.y * this.scaling;
-		return obj;
+	public getObjects(name: string): LevelObject[] {
+		const objects = this.objectsLayer.objects.filter(
+			o => o.name === name
+		) as LevelObject[];
+
+		objects.forEach(o => Object.assign(o, this.scaleObject(o)));
+		return objects;
+	}
+
+	public scaleObject(obj: LevelObject) {
+		return {
+			displayX: obj.x * this.scaling,
+			displayY:
+				this.scene.height - this.platforms.displayHeight + obj.y * this.scaling,
+			displayWidth: obj.width * this.scaling,
+			displayHeight: obj.height * this.scaling
+		};
 	}
 
 	private createLayer(name: string): Phaser.Tilemaps.DynamicTilemapLayer {
