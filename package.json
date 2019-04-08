@@ -6,7 +6,11 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "webpack-dev-server --config webpack/webpack.dev.js",
-		"build": "webpack --config webpack/webpack.prod.js"
+		"build": "webpack --config webpack/webpack.prod.js",
+		"server": "node server.js"
+	},
+	"engines": {
+		"node": "10.x"
 	},
 	"license": "MIT",
 	"devDependencies": {
@@ -28,6 +32,7 @@
 		"workbox-webpack-plugin": "^4.1.1"
 	},
 	"dependencies": {
+		"express": "^4.16.4",
 		"phaser": "^3.16.2",
 		"phaser3-rex-notes": "git+https://github.com/rexrainbow/phaser3-rex-notes.git"
 	}
