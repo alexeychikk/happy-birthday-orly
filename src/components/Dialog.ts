@@ -14,7 +14,7 @@ const DIALOGS: ILevelDialog[] = [
 	{
 		question:
 			'Who is the best guy in the world?<br>' +
-			'<span class="dialog-hint">(...he wrote this game)</span>',
+			'<span class="dialog-hint">(...he made this game)</span>',
 		answers: [
 			'alex',
 			'alexey',

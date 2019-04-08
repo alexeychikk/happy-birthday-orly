@@ -1,15 +1,18 @@
 import { LevelScene } from '@src/scenes';
 import { sleep } from '@src/utils';
 import { LevelSprite } from './Doors';
+import { FlyingText } from './FlyingText';
 
 export class LoveChest {
 	public sprite: LevelSprite;
 	private scene: LevelScene;
 	private animation: Phaser.Animations.Animation;
 	private hearts: Phaser.GameObjects.Particles.ParticleEmitterManager;
+	private flyingText: FlyingText;
 
 	constructor({ scene }: { scene: LevelScene }) {
 		this.scene = scene;
+		this.flyingText = new FlyingText({ scene });
 	}
 
 	public preload() {
@@ -35,9 +38,12 @@ export class LoveChest {
 
 		this.hearts = this.scene.add.particles('heart');
 		this.hearts.setDepth(49);
+		this.createFlyingText();
 	}
 
-	public update() {}
+	public update() {
+		this.flyingText.update();
+	}
 
 	public async open(giftsCount: number) {
 		this.sprite.play(this.animation.key);
@@ -47,7 +53,7 @@ export class LoveChest {
 		const { x, y } = this.sprite.getCenter();
 		const frequency = Math.min(300, 5000 / giftsCount);
 		const emitTime = frequency * giftsCount;
-		const emitter = this.hearts.createEmitter({
+		this.hearts.createEmitter({
 			x: { min: x - 20, max: x + 20 },
 			y: y - 20,
 			speed: 300,
@@ -67,5 +73,23 @@ export class LoveChest {
 		});
 
 		await sleep(emitTime + 500);
+		await this.flyingText.show();
+	}
+
+	private createFlyingText() {
+		const { x, y } = this.sprite.getCenter();
+
+		this.flyingText.create({
+			from: { x, y },
+			to: { x: x - 650, y: y - 250 },
+			text: 'Happy Birthday, Orly!',
+			style: {
+				fontFamily: 'Arcade',
+				fontSize: '32px',
+				color: '#fe0000',
+				stroke: '#000000',
+				strokeThickness: 4
+			}
+		});
 	}
 }

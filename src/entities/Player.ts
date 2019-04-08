@@ -24,7 +24,7 @@ export class Player {
 	};
 	private spriteKey: string = 'orly';
 	private cursors: PhCursorKeys;
-	private movementSpeed: number = 1000;
+	private movementSpeed: number = 300;
 	private jumpPower: number = 670;
 	private jumpVelocityX: number = 1;
 	private jumpPressDuration: number = 300;
