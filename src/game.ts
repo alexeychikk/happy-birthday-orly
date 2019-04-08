@@ -2,6 +2,8 @@ import 'phaser';
 
 import { MainScene } from './scenes/MainScene';
 
+console.log(window.innerHeight, window.innerWidth);
+
 const config: GameConfig = {
 	type: Phaser.AUTO,
 	width: window.innerWidth,
@@ -14,6 +16,14 @@ const config: GameConfig = {
 			gravity: { y: 1850 }
 		},
 		default: 'arcade'
+	},
+	scale: {
+		width: 1536,
+		height: 864,
+		autoCenter: Phaser.Scale.CENTER_BOTH,
+		autoRound: true,
+		mode: Phaser.Scale.FIT,
+		zoom: window.innerWidth / 1536
 	},
 	scene: [MainScene],
 	render: {

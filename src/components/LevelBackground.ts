@@ -28,7 +28,7 @@ export class LevelBackground {
 	}
 
 	public update() {
-		this.cloudsBG.tilePositionX -= 0.01;
+		this.cloudsBG.tilePositionX += 0.01;
 		this.cloudsMG3.tilePositionX -= 0.02;
 		this.cloudsMG2.tilePositionX -= 0.03;
 		this.cloudsMG1.tilePositionX -= 0.05;

@@ -103,7 +103,7 @@
 				height: 100%;
 				margin: 0;
 				padding: 0;
-				background-color: #000000;
+				background-color: #448aff;
 				overflow: hidden;
 			}
 			#phaser-game {
@@ -145,8 +145,40 @@
 				background: url('assets/images/dialog.png');
 				position: fixed;
 				right: 10%;
-				top: 10%;
+				top: 50%;
+				transform: translateY(-100%);
 				transition: all 0.4s ease-in-out;
+				transform-origin: top right;
+			}
+			@media screen and (max-width: 1367px) {
+				#dialog {
+					transform: scale(0.89) translateY(-100%);
+				}
+			}
+			@media screen and (max-width: 1024px) {
+				#dialog {
+					transform: scale(0.66) translateY(-100%);
+				}
+			}
+			@media screen and (max-width: 768px) {
+				#dialog {
+					transform: scale(0.5) translateY(-100%);
+				}
+			}
+			@media screen and (max-width: 640px) {
+				#dialog {
+					transform: scale(0.41) translateY(-100%);
+				}
+			}
+			@media screen and (max-width: 520px) {
+				#dialog {
+					transform: scale(0.34) translateY(-100%);
+				}
+			}
+			@media screen and (max-width: 480px) {
+				#dialog {
+					transform: scale(0.31) translateY(-100%);
+				}
 			}
 			.dialog-content {
 				position: relative;
