@@ -38,7 +38,6 @@ export class LoveChest {
 
 		this.hearts = this.scene.add.particles('heart');
 		this.hearts.setDepth(49);
-		this.createFlyingText();
 	}
 
 	public update() {
@@ -73,6 +72,7 @@ export class LoveChest {
 		});
 
 		await sleep(emitTime + 500);
+		this.createFlyingText();
 		await this.flyingText.show();
 	}
 
@@ -81,7 +81,7 @@ export class LoveChest {
 
 		this.flyingText.create({
 			from: { x, y },
-			to: { x: x - 650, y: y - 250 },
+			to: { x: this.scene.cameras.main.midPoint.x, y: y - 250 },
 			text: 'Happy Birthday, Orly!',
 			style: {
 				fontFamily: 'Arcade',

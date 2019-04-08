@@ -210,6 +210,23 @@
 			input[type='number'] {
 				-moz-appearance: textfield; /* Firefox */
 			}
+
+			.created-by {
+				position: fixed;
+				bottom: 20px;
+				right: 20px;
+				font-size: 10px;
+				font-family: 'Arcade';
+				color: #000;
+				background-color: rgba(255, 255, 255, 0.6);
+				border-radius: 4px;
+				padding: 4px 8px;
+			}
+
+			.profile-link {
+				text-decoration: none;
+				color: #01579b;
+			}
 		</style>
 
 		<noscript>
@@ -230,6 +247,17 @@
 				/>
 				<button id="dialog-button" class="arcade-text">Answer</button>
 			</div>
+		</div>
+
+		<div class="created-by">
+			Created by
+			<a
+				class="profile-link"
+				href="https://www.linkedin.com/in/alex-zinkevych"
+				target="_blank"
+			>
+				Alex Zinkevych
+			</a>
 		</div>
 
 		<script>

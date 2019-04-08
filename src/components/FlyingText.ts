@@ -29,17 +29,29 @@ export class FlyingText {
 		this.paths = [];
 		this.letters = [];
 
-		this.text.split('').forEach((char, index) => {
+		const chars = this.text.split('');
+		chars.forEach(char => {
 			const letter = this.scene.add
 				.text(from.x, from.y, char, style)
 				.setDepth(200)
-				.setScale(0)
-				.setScaleMode(Phaser.ScaleModes.NEAREST);
+				.setScale(0);
 			this.letters.push(letter);
+		});
 
+		const spacing = 10;
+		const fullWidth =
+			this.letters.reduce(
+				(width, letter) => width + letter.width + spacing,
+				0
+			) - spacing;
+
+		this.letters.forEach((letter, index) => {
 			const line = new Phaser.Curves.Line(
 				new Phaser.Math.Vector2(from.x, from.y - 10),
-				new Phaser.Math.Vector2(to.x + (letter.width + 10) * index, to.y)
+				new Phaser.Math.Vector2(
+					to.x - fullWidth / 2 + (letter.width + 10) * index,
+					to.y - letter.height / 2
+				)
 			);
 			const path = new Phaser.Curves.Path(from.x, from.y);
 			path.add(line);
