@@ -7,6 +7,7 @@ export class MainScene extends LevelScene {
 	private map: LevelMap;
 	private dialog: Dialog;
 	private giftsCount: number;
+	private music: Phaser.Sound.BaseSound;
 
 	constructor() {
 		super({ key: 'MainScene' });
@@ -19,12 +20,19 @@ export class MainScene extends LevelScene {
 	public preload() {
 		this.map.preload();
 		this.player.preload();
+		this.load.audio('maria', 'assets/audio/maria.ogg', { stream: true });
 	}
 
 	public create() {
 		this.map.create();
 		this.player.create({ position: this.map.getStartPosition() });
 		this.addColliders();
+		if (!this.music) {
+			this.music = this.sound.add('maria', {
+				loop: true
+			});
+			this.music.play();
+		}
 	}
 
 	public update(time: number, delta: number) {
