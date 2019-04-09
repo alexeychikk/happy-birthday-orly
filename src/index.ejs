@@ -131,36 +131,6 @@
 				transition: all 0.4s ease-in-out;
 				transform-origin: top right;
 			}
-			@media screen and (max-width: 1367px) {
-				#dialog {
-					transform: scale(0.89) translateY(-100%);
-				}
-			}
-			@media screen and (max-width: 1024px) {
-				#dialog {
-					transform: scale(0.66) translateY(-100%);
-				}
-			}
-			@media screen and (max-width: 768px) {
-				#dialog {
-					transform: scale(0.5) translateY(-100%);
-				}
-			}
-			@media screen and (max-width: 640px) {
-				#dialog {
-					transform: scale(0.41) translateY(-100%);
-				}
-			}
-			@media screen and (max-width: 520px) {
-				#dialog {
-					transform: scale(0.34) translateY(-100%);
-				}
-			}
-			@media screen and (max-width: 480px) {
-				#dialog {
-					transform: scale(0.31) translateY(-100%);
-				}
-			}
 			.dialog-content {
 				position: relative;
 				width: 100%;
@@ -234,11 +204,51 @@
 				background-color: rgba(255, 255, 255, 0.6);
 				border-radius: 4px;
 				padding: 4px 8px;
+				user-select: none;
 			}
 
 			.profile-link {
 				text-decoration: none;
 				color: #01579b;
+			}
+
+			@media screen and (max-width: 1367px) {
+				#dialog {
+					transform: scale(0.89) translateY(-100%);
+				}
+			}
+			@media screen and (max-width: 1024px) {
+				#dialog {
+					transform: scale(0.66) translateY(-100%);
+				}
+			}
+			@media screen and (max-width: 768px) {
+				#dialog {
+					transform: scale(0.5) translateY(-100%);
+				}
+			}
+			@media screen and (max-width: 640px) {
+				#dialog {
+					transform: scale(0.41) translateY(-100%);
+				}
+				.created-by {
+					right: 50%;
+					bottom: 10px;
+					font-size: 7px;
+					transform: translateX(50%);
+					text-align: center;
+					white-space: nowrap;
+				}
+			}
+			@media screen and (max-width: 520px) {
+				#dialog {
+					transform: scale(0.34) translateY(-100%);
+				}
+			}
+			@media screen and (max-width: 480px) {
+				#dialog {
+					transform: scale(0.31) translateY(-100%);
+				}
 			}
 		</style>
 

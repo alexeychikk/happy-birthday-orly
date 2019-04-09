@@ -1,5 +1,5 @@
 import { LevelScene } from '@src/scenes';
-import { getCursorPressDuration, PhCursorKeys, sleep } from '@src/utils';
+import { getCursorPressDuration, sleep } from '@src/utils';
 
 type PhAnimation = Phaser.Animations.Animation;
 type PhSprite = Phaser.Physics.Arcade.Sprite & {
@@ -23,7 +23,6 @@ export class Player {
 		fall: PhAnimation;
 	};
 	private spriteKey: string = 'orly';
-	private cursors: PhCursorKeys;
 	private movementSpeed: number = 300;
 	private jumpPower: number = 670;
 	private jumpVelocityX: number = 1;
@@ -51,7 +50,6 @@ export class Player {
 	public create({ position }: { position: Vector2Like }): void {
 		this.createAnimations();
 		this.createSprite(position);
-		this.cursors = this.scene.input.keyboard.createCursorKeys() as PhCursorKeys;
 	}
 
 	public update(): void {
@@ -67,13 +65,13 @@ export class Player {
 	private applyControls() {
 		if (this.frozen) return;
 		this.fall();
-		if (this.cursors.up.isDown && this.cursors.down.isUp) {
+		if (this.scene.gameInput.pressingUp && !this.scene.gameInput.pressingDown) {
 			this.jump();
 		} else {
 			this.endJump();
 		}
 
-		if (this.cursors.left.isDown || this.cursors.right.isDown) {
+		if (this.scene.gameInput.pressingLeftOrRight) {
 			this.walk();
 		} else {
 			this.tryStop();
@@ -108,13 +106,13 @@ export class Player {
 
 	private walk(): void {
 		const onFloor = this.sprite.body.onFloor();
-		const walkingLeft = this.cursors.left.isDown;
+		const walkingLeft = this.scene.gameInput.pressingLeft;
 		this.sprite.setVelocityX(this.getVelocity(walkingLeft));
 		this.sprite.setFlipX(walkingLeft);
 
 		if (
 			this.sprite.state !== PlayerState.walking &&
-			this.cursors.up.isUp &&
+			!this.scene.gameInput.pressingUp &&
 			onFloor
 		) {
 			this.sprite.setState(PlayerState.walking);
@@ -141,14 +139,10 @@ export class Player {
 		return this.jumpVelocityX * jumpFactor * this.getWalkFactor(walkingLeft);
 	}
 
-	private getPressDuration(direction: keyof PhCursorKeys): number {
-		return getCursorPressDuration(this.scene, this.cursors, direction);
-	}
-
 	private getWalkDuration(walkingLeft: boolean): number {
 		return Math.min(
 			this.jumpPressDuration,
-			this.getPressDuration(walkingLeft ? 'left' : 'right')
+			this.scene.gameInput.getPressDuration(walkingLeft ? 'left' : 'right')
 		);
 	}
 
@@ -188,7 +182,7 @@ export class Player {
 	private stop(): void {
 		this.sprite.anims.stop();
 		this.sprite.setVelocityX(0);
-		if (this.cursors.down.isDown) {
+		if (this.scene.gameInput.pressingDown) {
 			this.sprite.setState(PlayerState.sitting);
 			this.sprite.setFrame(17);
 		} else {
@@ -198,7 +192,7 @@ export class Player {
 	}
 
 	private tryStop() {
-		if (!this.sprite.body.onFloor() || this.cursors.up.isDown) return;
+		if (!this.sprite.body.onFloor() || this.scene.gameInput.pressingUp) return;
 		this.stop();
 	}
 
