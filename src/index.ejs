@@ -284,6 +284,7 @@
 			Your browser does not support the audio element.
 		</audio>
 
+		<% if(htmlWebpackPlugin.options.options.env === 'production'){ %>
 		<script>
 			// Check that service workers are registered
 			if ('serviceWorker' in navigator) {
@@ -293,5 +294,6 @@
 				});
 			}
 		</script>
+		<% } %>
 	</body>
 </html>

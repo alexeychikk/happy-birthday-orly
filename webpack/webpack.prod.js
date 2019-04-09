@@ -5,6 +5,7 @@ const merge = require('webpack-merge');
 const common = require('./webpack.common');
 const JavaScriptObfuscator = require('webpack-obfuscator');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
+const { InjectManifest } = require('workbox-webpack-plugin');
 
 const prod = {
 	mode: 'production',
@@ -30,7 +31,11 @@ const prod = {
 				stringArrayThreshold: 0.75
 			},
 			['vendors.*.js']
-		)
+		),
+		new InjectManifest({
+			swSrc: path.resolve(__dirname, '../src/pwa/sw.js'),
+			exclude: [/\/spine\/raw\/*/]
+		})
 	]
 };
 

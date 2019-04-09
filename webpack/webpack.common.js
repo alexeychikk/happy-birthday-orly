@@ -1,7 +1,6 @@
 const path = require('path');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { InjectManifest } = require('workbox-webpack-plugin');
 
 module.exports = {
 	entry: './src/game.ts',
@@ -32,7 +31,11 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			template: 'src/index.html',
+			options: {
+				env: process.env.NODE_ENV
+			},
+			inject: true,
+			template: 'src/index.ejs',
 			minify: process.env.NODE_ENV === 'production' && {
 				collapseWhitespace: true,
 				removeComments: true,
@@ -44,10 +47,6 @@ module.exports = {
 			{ from: 'src/assets', to: 'assets' },
 			{ from: 'src/pwa', to: '' },
 			{ from: 'src/favicon.ico', to: '' }
-		]),
-		new InjectManifest({
-			swSrc: path.resolve(__dirname, '../src/pwa/sw.js'),
-			exclude: [/\/spine\/raw\/*/]
-		})
+		])
 	]
 };

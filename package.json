@@ -6,6 +6,7 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "webpack-dev-server --config webpack/webpack.dev.js",
+		"start:local": "webpack-dev-server --config webpack/webpack.local.js",
 		"build": "webpack --config webpack/webpack.prod.js",
 		"server": "node server.js"
 	},
@@ -34,7 +35,6 @@
 	"dependencies": {
 		"@awaitjs/express": "^0.3.0",
 		"express": "^4.16.4",
-		"phaser": "^3.16.2",
-		"phaser3-rex-notes": "git+https://github.com/rexrainbow/phaser3-rex-notes.git"
+		"phaser": "^3.16.2"
 	}
 }

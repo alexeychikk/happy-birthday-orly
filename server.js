@@ -12,8 +12,6 @@ const indexFile = path.join(folder, 'index.html');
 const assets = path.join(folder, 'assets');
 const audio = path.join(assets, 'audio');
 
-let counter = 0;
-
 app
 	.getAsync('/assets/audio/:audio', async (req, res, next) => {
 		const filePath = path.join(audio, req.params.audio);
@@ -26,13 +24,13 @@ app
 		const start = parseInt(positions[0], 10);
 		const total = stat.size;
 		const end = positions[1] ? parseInt(positions[1], 10) : total - 1;
-		const chunksize = end - start + 1;
+		const chunkSize = end - start + 1;
 
 		res.writeHead(206, {
 			'Accept-Ranges': 'bytes',
 			'Content-Range': 'bytes ' + start + '-' + end + '/' + total,
 			'Content-Type': 'audio/ogg',
-			'Content-Length': chunksize
+			'Content-Length': chunkSize
 		});
 
 		const stream = fs
