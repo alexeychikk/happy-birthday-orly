@@ -1,5 +1,5 @@
 import { LevelScene } from '@src/scenes';
-import { getCursorPressDuration, PhCursorKeys } from '@src/utils';
+import { getCursorPressDuration, PhCursorKeys, sleep } from '@src/utils';
 
 type PhAnimation = Phaser.Animations.Animation;
 type PhSprite = Phaser.Physics.Arcade.Sprite & {
@@ -29,6 +29,7 @@ export class Player {
 	private jumpVelocityX: number = 1;
 	private jumpPressDuration: number = 300;
 	private frozen: boolean = false;
+	private dead: boolean = false;
 
 	constructor({ scene }: { scene: LevelScene }) {
 		this.scene = scene;
@@ -79,10 +80,30 @@ export class Player {
 		}
 	}
 
-	private checkDeath() {
-		if (this.sprite.y > this.scene.height + 100) {
+	private async checkDeath() {
+		if (this.dead) return;
+		if (this.sprite.y >= this.scene.height) {
+			this.dead = true;
+			this.scene.cameras.main.stopFollow();
+			await sleep(100);
+			await this.createDeathParticles();
 			this.scene.scene.restart();
+			this.dead = false;
 		}
+	}
+
+	private async createDeathParticles() {
+		this.scene.particles.hearts.setDepth(51).createEmitter({
+			x: this.sprite.x,
+			y: this.scene.height,
+			speed: 500,
+			gravityY: 1100,
+			quantity: 5,
+			maxParticles: 5,
+			angle: { min: 230, max: 310 },
+			lifespan: 1500
+		});
+		await sleep(1500);
 	}
 
 	private walk(): void {

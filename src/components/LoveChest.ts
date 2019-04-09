@@ -7,7 +7,6 @@ export class LoveChest {
 	public sprite: LevelSprite;
 	private scene: LevelScene;
 	private animation: Phaser.Animations.Animation;
-	private hearts: Phaser.GameObjects.Particles.ParticleEmitterManager;
 	private flyingText: FlyingText;
 
 	constructor({ scene }: { scene: LevelScene }) {
@@ -20,7 +19,6 @@ export class LoveChest {
 			frameWidth: 64,
 			frameHeight: 64
 		});
-		this.scene.load.image('heart', 'assets/sprites/heart.png');
 	}
 
 	public create({ sprite }: { sprite: LevelSprite }) {
@@ -35,9 +33,6 @@ export class LoveChest {
 			repeat: 0
 		}) as Phaser.Animations.Animation;
 		sprite.anims.load(this.animation.key);
-
-		this.hearts = this.scene.add.particles('heart');
-		this.hearts.setDepth(49);
 	}
 
 	public update() {
@@ -52,7 +47,7 @@ export class LoveChest {
 		const { x, y } = this.sprite.getCenter();
 		const frequency = Math.min(300, 5000 / giftsCount);
 		const emitTime = frequency * giftsCount;
-		this.hearts.createEmitter({
+		this.scene.particles.hearts.setDepth(49).createEmitter({
 			x: { min: x - 20, max: x + 20 },
 			y: y - 20,
 			speed: 300,
