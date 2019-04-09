@@ -33,7 +33,12 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			template: 'src/index.html',
-			minify: process.env.NODE_ENV === 'production'
+			minify: process.env.NODE_ENV === 'production' && {
+				collapseWhitespace: true,
+				removeComments: true,
+				minifyCSS: true,
+				minifyJS: true
+			}
 		}),
 		new CopyWebpackPlugin([
 			{ from: 'src/assets', to: 'assets' },
