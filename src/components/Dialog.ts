@@ -1,4 +1,4 @@
-import { sleep } from '@src/utils';
+import { isTouchDevice, sleep } from '@src/utils';
 
 export interface ILevelDialog {
 	question: string;
@@ -61,9 +61,13 @@ export class Dialog {
 
 		await this.toggle(true);
 		this.setupInput(type);
-		this.input.focus();
+		if (!isTouchDevice) this.input.focus();
 		this.input.scrollIntoView();
 		const answer = await this.waitForAnswer(answers, type);
+		if (isTouchDevice) {
+			this.input.blur();
+			await sleep(500);
+		}
 		this.toggle(false);
 		return answer;
 	}
