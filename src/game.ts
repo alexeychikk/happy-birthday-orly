@@ -2,8 +2,6 @@ import 'phaser';
 
 import { MainScene } from './scenes/MainScene';
 
-console.log(window.innerHeight, window.innerWidth);
-
 const config: GameConfig = {
 	type: Phaser.AUTO,
 	width: window.innerWidth,

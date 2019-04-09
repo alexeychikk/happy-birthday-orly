@@ -31,7 +31,10 @@ module.exports = {
 		}
 	},
 	plugins: [
-		new HtmlWebpackPlugin({ template: 'src/index.html' }),
+		new HtmlWebpackPlugin({
+			template: 'src/index.html',
+			minify: process.env.NODE_ENV === 'production'
+		}),
 		new CopyWebpackPlugin([
 			{ from: 'src/assets', to: 'assets' },
 			{ from: 'src/pwa', to: '' },
