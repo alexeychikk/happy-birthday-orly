@@ -1,9 +1,13 @@
 {
-	"name": "z-spell",
+	"name": "happy-birthday-orly",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Simple HTML5 game created for the birthday of my beloved girlfriend Orly.",
 	"author": "alexeychikk",
-	"main": "index.js",
+	"main": "src/game.ts",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/alexeychikk/z-spell.git"
+	},
 	"scripts": {
 		"start": "webpack-dev-server --config webpack/webpack.dev.js",
 		"start:local": "webpack-dev-server --config webpack/webpack.local.js",
