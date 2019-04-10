@@ -2,61 +2,40 @@ import { LevelScene } from '@src/scenes';
 
 export class FlyingText {
 	public text: string;
+	public style: object;
 	private scene: LevelScene;
 	private paths: Phaser.Curves.Path[] = [];
 	private letters: Phaser.GameObjects.Text[] = [];
 	private offsets: number[];
 	private isPlaying: boolean = false;
 	private resolve: () => void;
+	private from: Vector2Like;
+	private to: Vector2Like;
+	private fullWidth: number;
+	private spacing: number = 10;
 
-	constructor({ text, scene }: { text?: string; scene: LevelScene }) {
-		this.text = text || '';
-		this.scene = scene;
-	}
-
-	public create({
+	public constructor({
+		scene,
 		from,
 		to,
+		spacing,
 		style,
 		text
 	}: {
-		from: Vector2Like;
-		to: Vector2Like;
+		scene: LevelScene;
+		from?: Vector2Like;
+		to?: Vector2Like;
+		spacing?: number;
 		style: object;
-		text?: string;
+		text: string;
 	}) {
-		this.text = text || this.text;
-		this.paths = [];
-		this.letters = [];
+		this.scene = scene;
+		this.text = text;
+		this.style = style;
+		this.spacing = spacing || this.spacing;
 
-		const chars = this.text.split('');
-		chars.forEach(char => {
-			const letter = this.scene.add
-				.text(from.x, from.y, char, style)
-				.setDepth(200)
-				.setScale(0);
-			this.letters.push(letter);
-		});
-
-		const spacing = 10;
-		const fullWidth =
-			this.letters.reduce(
-				(width, letter) => width + letter.width + spacing,
-				0
-			) - spacing;
-
-		this.letters.forEach((letter, index) => {
-			const line = new Phaser.Curves.Line(
-				new Phaser.Math.Vector2(from.x, from.y - 10),
-				new Phaser.Math.Vector2(
-					to.x - fullWidth / 2 + (letter.width + 10) * index,
-					to.y - letter.height / 2
-				)
-			);
-			const path = new Phaser.Curves.Path(from.x, from.y);
-			path.add(line);
-			this.paths.push(path);
-		});
+		this.tryCreateLetters(from);
+		this.tryCreatePaths(to);
 	}
 
 	public update() {
@@ -77,13 +56,79 @@ export class FlyingText {
 		}
 	}
 
-	public async show(): Promise<void> {
+	public async show({
+		from,
+		to
+	}: { from?: Vector2Like; to?: Vector2Like } = {}): Promise<void> {
 		if (!this.text) return;
 		this.offsets = this.letters.map(() => 0);
+		this.tryCreateLetters(from);
+		this.tryCreatePaths(to);
 		this.isPlaying = true;
 
 		return new Promise(resolve => {
 			this.resolve = resolve;
+		});
+	}
+
+	private tryCreateLetters(from?: Vector2Like) {
+		if (from && this.from) {
+			this.from = from;
+			return this.repositionLetters();
+		} else if (!from && this.from) return;
+
+		this.from = from || this.from || { x: 0, y: 0 };
+		this.createLetters();
+	}
+
+	private createLetters() {
+		if (!this.from || !this.text) return;
+
+		this.letters = [];
+		this.text.split('').forEach(char => {
+			const letter = this.scene.add
+				.text(this.from.x, this.from.y, char, this.style)
+				.setDepth(200)
+				.setScale(0);
+			this.letters.push(letter);
+		});
+		this.updateFullWidth();
+	}
+
+	private updateFullWidth() {
+		this.fullWidth =
+			this.letters.reduce(
+				(width, letter) => width + letter.width + this.spacing,
+				0
+			) - this.spacing;
+	}
+
+	private repositionLetters() {
+		this.letters.forEach(l => l.setPosition(this.from.x, this.from.y));
+	}
+
+	private tryCreatePaths(to?: Vector2Like) {
+		if (!to) return;
+		this.to = to;
+		this.createPaths();
+	}
+
+	private createPaths() {
+		if (!this.to) return;
+
+		this.paths = [];
+
+		this.letters.forEach((letter, index) => {
+			const line = new Phaser.Curves.Line(
+				new Phaser.Math.Vector2(this.from.x, this.from.y - 10),
+				new Phaser.Math.Vector2(
+					this.to.x - this.fullWidth / 2 + (letter.width + 10) * index,
+					this.to.y - letter.height / 2
+				)
+			);
+			const path = new Phaser.Curves.Path(this.from.x, this.from.y);
+			path.add(line);
+			this.paths.push(path);
 		});
 	}
 }

@@ -11,7 +11,6 @@ export class LoveChest {
 
 	constructor({ scene }: { scene: LevelScene }) {
 		this.scene = scene;
-		this.flyingText = new FlyingText({ scene });
 	}
 
 	public preload() {
@@ -33,13 +32,14 @@ export class LoveChest {
 			repeat: 0
 		}) as Phaser.Animations.Animation;
 		sprite.anims.load(this.animation.key);
+		this.createFlyingText();
 	}
 
 	public update() {
 		this.flyingText.update();
 	}
 
-	public async open(giftsCount: number) {
+	public async open(giftsCount: number = 1) {
 		this.sprite.play(this.animation.key);
 		this.sprite.body.checkCollision.none = true;
 		await sleep(30);
@@ -67,16 +67,14 @@ export class LoveChest {
 		});
 
 		await sleep(emitTime + 500);
-		this.createFlyingText();
-		await this.flyingText.show();
+		await this.flyingText.show({
+			from: { x, y },
+			to: { x: this.scene.cameras.main.midPoint.x, y: y - 250 }
+		});
 	}
 
 	private createFlyingText() {
-		const { x, y } = this.sprite.getCenter();
-
-		this.flyingText.create({
-			from: { x, y },
-			to: { x: this.scene.cameras.main.midPoint.x, y: y - 250 },
+		this.flyingText = new FlyingText({
 			text: 'Happy Birthday, Orly!',
 			style: {
 				fontFamily: 'Arcade',
@@ -84,7 +82,8 @@ export class LoveChest {
 				color: '#fe0000',
 				stroke: '#000000',
 				strokeThickness: 4
-			}
+			},
+			scene: this.scene
 		});
 	}
 }
