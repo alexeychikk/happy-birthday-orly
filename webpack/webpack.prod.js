@@ -34,7 +34,7 @@ const prod = {
 		),
 		new InjectManifest({
 			swSrc: path.resolve(__dirname, '../src/pwa/sw.js'),
-			exclude: [/\/spine\/raw\/*/]
+			exclude: [/sw\.js$/, /audio.*\.ogg$/, /index\.html$/]
 		})
 	]
 };
