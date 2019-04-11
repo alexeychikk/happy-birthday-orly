@@ -212,6 +212,10 @@
 				color: #01579b;
 			}
 
+			#playlist {
+				display: none;
+			}
+
 			@media screen and (max-width: 1367px) {
 				#dialog {
 					transform: scale(0.89) translateY(-100%);
@@ -289,11 +293,14 @@
 			allow="autoplay"
 			style="display:none"
 		></iframe>
-		<audio id="player" autoplay loop>
-			<source src="assets/audio/breezin.ogg" type="audio/ogg" />
-			<source src="assets/audio/maria.ogg" type="audio/ogg" />
+		<audio id="player">
+			<source id="player-src" src="assets/audio/breezin.ogg" type="audio/ogg" />
 			Your browser does not support the audio element.
 		</audio>
+		<ul id="playlist">
+			<li data-src="assets/audio/sandoval.ogg"></li>
+			<li data-src="assets/audio/maria.ogg"></li>
+		</ul>
 
 		<% if(htmlWebpackPlugin.options.options.env === 'production'){ %>
 		<script>

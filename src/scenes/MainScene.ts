@@ -1,5 +1,7 @@
 import { Dialog, DoorState, LevelMap, LevelSprite } from '@src/components';
+import { MusicPlaylist } from '@src/components/MusicPlaylist';
 import { Player } from '@src/entities';
+
 import { LevelScene } from './LevelScene';
 
 export class MainScene extends LevelScene {
@@ -7,6 +9,7 @@ export class MainScene extends LevelScene {
 	private map: LevelMap;
 	private dialog: Dialog;
 	private giftsCount: number;
+	private musicPlaylist: MusicPlaylist;
 
 	constructor() {
 		super({ key: 'MainScene' });
@@ -14,6 +17,8 @@ export class MainScene extends LevelScene {
 		this.dialog = new Dialog();
 		this.player = new Player({ scene: this });
 		this.map = new LevelMap({ scene: this });
+		this.musicPlaylist = new MusicPlaylist();
+		this.musicPlaylist.play();
 	}
 
 	public preload() {
