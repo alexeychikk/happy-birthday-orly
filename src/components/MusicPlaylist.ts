@@ -32,8 +32,10 @@ export class MusicPlaylist {
 	}
 
 	private createPlaylist(): string[] {
-		return Array.from(
+		const arr = Array.from(
 			document.querySelectorAll<HTMLLIElement>('#playlist [data-src]')
 		).map(e => e.dataset.src as string);
+		arr.unshift(this.playerSrc.src);
+		return arr;
 	}
 }
