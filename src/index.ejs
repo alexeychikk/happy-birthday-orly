@@ -128,7 +128,6 @@
 				right: 10%;
 				top: 50%;
 				transform: translateY(-100%);
-				transition: all 0.4s ease-in-out;
 				transform-origin: top right;
 			}
 			.dialog-content {
@@ -136,11 +135,13 @@
 				width: 100%;
 				height: 100%;
 			}
-			#dialog-text {
+			.dialog-text-wrapper {
 				position: absolute;
 				left: 46px;
 				width: 308px;
 				top: 43px;
+			}
+			#dialog-text {
 				font-size: 15px;
 			}
 			#dialog-input {
@@ -177,10 +178,12 @@
 			.visible {
 				visibility: visible;
 				opacity: 1;
+				transition: opacity 0.3s ease-in-out;
 			}
 			.hidden {
 				visibility: hidden;
 				opacity: 0;
+				transition: opacity 0.3s ease-in-out;
 				transform: translateY(20px);
 			}
 			input::-webkit-outer-spin-button,
@@ -264,7 +267,11 @@
 
 		<div id="dialog" class="hidden">
 			<div class="dialog-content">
-				<div id="dialog-text" class="arcade-text"></div>
+				<div class="dialog-text-wrapper">
+					<div id="dialog-text" class="arcade-text"></div>
+					<br />
+					<div id="dialog-hint" class="arcade-text dialog-hint hidden"></div>
+				</div>
 				<input
 					id="dialog-input"
 					class="arcade-text"
