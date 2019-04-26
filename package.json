@@ -12,7 +12,7 @@
 		"start": "webpack-dev-server --config webpack/webpack.dev.js",
 		"start:local": "webpack-dev-server --config webpack/webpack.local.js",
 		"build": "webpack --config webpack/webpack.prod.js",
-		"server": "node server.js"
+		"server": "pm2-runtime start ecosystem.config.js --env production"
 	},
 	"engines": {
 		"node": "10.x"
@@ -39,6 +39,7 @@
 	"dependencies": {
 		"@awaitjs/express": "^0.3.0",
 		"express": "^4.16.4",
-		"phaser": "^3.16.2"
+		"phaser": "^3.16.2",
+		"pm2": "^3.5.0"
 	}
 }

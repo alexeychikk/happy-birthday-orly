@@ -157,26 +157,26 @@ export class Dialog {
 	private shakeButton() {
 		if (this.shakeTimeout) return;
 		this.button.classList.add('shake');
-		this.shakeTimeout = setTimeout(() => this.clearShakeButton(), 500);
+		this.shakeTimeout = window.setTimeout(() => this.clearShakeButton(), 500);
 	}
 
 	private clearShakeButton() {
 		if (!this.shakeTimeout) return;
-		clearTimeout(this.shakeTimeout);
+		window.clearTimeout(this.shakeTimeout);
 		this.shakeTimeout = 0;
 		this.button.classList.remove('shake');
 	}
 
 	private showHint() {
 		if (!this.hint || this.hintTimeout) return;
-		this.hintTimeout = setTimeout(() => {
+		this.hintTimeout = window.setTimeout(() => {
 			toggleVisibility(this.hint, true);
 			this.hintTimeout = 0;
 		}, 1500);
 	}
 
 	private hideHint() {
-		clearTimeout(this.hintTimeout);
+		window.clearTimeout(this.hintTimeout);
 		this.hintTimeout = 0;
 		toggleVisibility(this.hint, false);
 	}
