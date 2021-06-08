@@ -1,4 +1,4 @@
-# [Happy Birthday, Orly!](https://happy-birthday-orly.herokuapp.com) 
+# [Happy Birthday, Shreya!](https://happy-birthday-orly.herokuapp.com) 
 Simple HTML5 game created for the birthday of my beloved girlfriend Orly.  
 Built with [Phaser 3](https://phaser.io/phaser3) game framework.  
 [Enjoy!](https://happy-birthday-orly.herokuapp.com) 
