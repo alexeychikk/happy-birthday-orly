@@ -11,22 +11,19 @@ const DIALOGS: ILevelDialog[] = [
 	{
 		question: 'What is your name?',
 		answers: ['Shreya', 'shreya'],
-		hint: '(?) This game is made for my beloved girlfriend...'
+		hint: '(?) This game is made for my sister...'
 	},
 	{
 		question:
-			'Do you like the gift<br>' +
-			'<span class="dialog-hint">(...I made this game)</span>',
+			'The only Best photo of our trio was taken on<br>' +
+			'<span class="dialog-hint">(...try remembering)</span>',
 		answers: [
-            'Yup',
-            'yup',
-            'a lot',
-            'soo much'
+            '27-12-2019'
 		],
-		hint: '(?) Come on, just look at the bottom of the screen!'
+		hint: '(?) Come on, mai ghr k bahar tha hostel mei ruka tha yaad kr!'
 	},
 	{
-		question: 'How many gifts do you want for your birthday?',
+		question: 'My favorite number?',
 		answers: [],
 		type: 'number'
 	}
