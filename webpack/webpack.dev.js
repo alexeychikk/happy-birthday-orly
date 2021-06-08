@@ -7,7 +7,7 @@ const dev = {
 	devServer: {
 		open: true,
 		noInfo: true,
-		port: 8080
+		port: 8000
 	}
 };
 

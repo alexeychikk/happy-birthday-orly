@@ -10,16 +10,16 @@ export interface ILevelDialog {
 const DIALOGS: ILevelDialog[] = [
 	{
 		question: 'What is your name?',
-		answers: ['shreya', 'Shreya'],
-		hint: '(?) This game is made for my beloved sister...'
+		answers: ['Shreya', 'shreya'],
+		hint: '(?) This game is made for my beloved girlfriend...'
 	},
 	{
 		question:
-			'Who is the best guy in the world?<br>' +
-			'<span class="dialog-hint">(...he made this game)</span>',
+			'Do you like the gift<br>' +
+			'<span class="dialog-hint">(...I made this game)</span>',
 		answers: [
-			'akd',
-			'AkD'],
+            'Yup'
+		],
 		hint: '(?) Come on, just look at the bottom of the screen!'
 	},
 	{
