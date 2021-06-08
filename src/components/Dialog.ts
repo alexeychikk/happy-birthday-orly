@@ -18,7 +18,10 @@ const DIALOGS: ILevelDialog[] = [
 			'Do you like the gift<br>' +
 			'<span class="dialog-hint">(...I made this game)</span>',
 		answers: [
-            'Yup'
+            'Yup',
+            'yup',
+            'a lot',
+            'soo much'
 		],
 		hint: '(?) Come on, just look at the bottom of the screen!'
 	},
