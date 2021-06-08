@@ -10,7 +10,7 @@ export interface ILevelDialog {
 const DIALOGS: ILevelDialog[] = [
 	{
 		question: 'What is your name?',
-		answers: ['Shreya', 'shreya'],
+		answers: ['Chotti', 'chotti'],
 		hint: '(?) This game is made for my sister...'
 	},
 	{
