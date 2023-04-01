@@ -6,7 +6,7 @@
 	"main": "src/game.ts",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/alexeychikk/z-spell.git"
+		"url": "https://github.com/alexeychikk/happy-birthday-orly"
 	},
 	"scripts": {
 		"start": "webpack-dev-server --config webpack/webpack.dev.js",

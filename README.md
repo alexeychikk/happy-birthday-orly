@@ -1,7 +1,8 @@
-# [Happy Birthday, Orly!](https://happy-birthday-orly.herokuapp.com) 
+# [Happy Birthday, Orly!](https://hb-orly-server.onrender.com)
+
 Simple HTML5 game created for the birthday of my beloved girlfriend Orly.  
 Built with [Phaser 3](https://phaser.io/phaser3) game framework.  
-[Enjoy!](https://happy-birthday-orly.herokuapp.com) 
+[Enjoy!](https://hb-orly-server.onrender.com)
 
 # Setup
 
@@ -9,13 +10,13 @@ Built with [Phaser 3](https://phaser.io/phaser3) game framework.
 
 Run:
 
-```npm install```
+`npm install`
 
 ## 2. Run the development server:
 
 Run:
 
-```npm start```
+`npm start`
 
 This will run a server so you can run the game in a browser.
 
@@ -23,12 +24,11 @@ Open your browser and enter [localhost:8080](http://localhost:8080) into the add
 
 Also this will start a watch process, so you can change the source and the process will recompile and refresh the browser
 
-
 ## Build for deployment:
 
 Run:
 
-```npm run build```
+`npm run build`
 
 This will optimize and minimize the compiled bundle.
 
@@ -36,8 +36,7 @@ This will optimize and minimize the compiled bundle.
 
 Run:
 
-```npm run server```
+`npm run server`
 
 This will start production web server on port `process.env.PORT || 5000`. It serves static files and
 can stream `.ogg` audio files.
-

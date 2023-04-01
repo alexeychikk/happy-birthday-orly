@@ -27,6 +27,7 @@ export class MusicPlaylist {
 	}
 
 	private playOnUserInput = () => {
+		this.player.volume = 0.5;
 		this.player.play().catch((err) => console.log(err));
 		window.removeEventListener('keydown', this.playOnUserInput);
 		window.removeEventListener('click', this.playOnUserInput);
